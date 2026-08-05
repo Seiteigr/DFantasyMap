@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dlbvrmu3mt20x"]
+
+[ext_resource type="Script" uid="uid://bnh262m43ug4p" path="res://scripts/ui/main_menu.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c5w7p0pbs73n1" path="res://assets/wallpaper.png" id="2"]
+[ext_resource type="Theme" path="res://theme/pixel_theme.tres" id="3"]
+
+[node name="MainMenu" type="Control" unique_id=1078872329]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("3")
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="." unique_id=990519062]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=936585943]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49600002
+anchor_top = 0.58100003
+anchor_right = 0.49600002
+anchor_bottom = 0.58100003
+offset_left = -150.16003
+offset_top = -60.840027
+offset_right = 149.83997
+offset_bottom = 159.15997
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+
+[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=483629417]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Start Game"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=533552303]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "Sair"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
