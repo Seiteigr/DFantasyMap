@@ -195,4 +195,4 @@ disabled = true
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(1.45, 1.45)

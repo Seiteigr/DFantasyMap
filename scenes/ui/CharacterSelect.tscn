@@ -1,27 +1,31 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://c6uv0drrsyxgm"]
 
-[ext_resource type="Script" path="res://scripts/ui/character_select.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/icons/warrior_icon.png" id="2"]
-[ext_resource type="Texture2D" path="res://assets/icons/mage_icon.png" id="3"]
-[ext_resource type="Texture2D" path="res://assets/icons/archer_icon.png" id="4"]
-[ext_resource type="Theme" path="res://theme/pixel_theme.tres" id="5"]
-[ext_resource type="Texture2D" path="res://assets/wallpaper_castle.png" id="6"]
-[ext_resource type="Texture2D" path="res://assets/icons/rogue_icon.png" id="7"]
+[ext_resource type="Script" uid="uid://bsc1kv8ru2nhc" path="res://scripts/ui/character_select.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dhwwn1rechy86" path="res://assets/icons/warrior_icon.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://gwl6x8nnwk6q" path="res://assets/icons/mage_icon.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://bjm7dir0y7w5l" path="res://assets/icons/archer_icon.png" id="4"]
+[ext_resource type="Theme" uid="uid://ds2et1d5teiyk" path="res://theme/pixel_theme.tres" id="5"]
+[ext_resource type="Texture2D" uid="uid://bg25tc1o54qkp" path="res://assets/wallpaper_castle.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://bfkyjsxlbvxs7" path="res://assets/icons/rogue_icon.png" id="7"]
 
-[node name="CharacterSelect" type="Control"]
+[node name="CharacterSelect" type="Control" unique_id=422834737]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource("5")
 script = ExtResource("1")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1311073667]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource("6")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1125271570]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -32,87 +36,107 @@ offset_right = 340.0
 offset_bottom = 190.0
 theme_override_constants/separation = 18
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=700286660]
+layout_mode = 2
 theme_type_variation = &"TitleLabel"
 theme_override_font_sizes/font_size = 30
-horizontal_alignment = 1
 text = "Escolha seu personagem"
+horizontal_alignment = 1
 
-[node name="CardsContainer" type="HBoxContainer" parent="VBoxContainer"]
-alignment = 1
+[node name="CardsContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1496630926]
+layout_mode = 2
 theme_override_constants/separation = 16
+alignment = 1
 
-[node name="WarriorCard" type="PanelContainer" parent="VBoxContainer/CardsContainer"]
+[node name="WarriorCard" type="PanelContainer" parent="VBoxContainer/CardsContainer" unique_id=1276821584]
+layout_mode = 2
 theme_type_variation = &"CardPanel"
 
-[node name="WarriorVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/WarriorCard"]
+[node name="WarriorVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/WarriorCard" unique_id=471174590]
+layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="WarriorIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/WarriorCard/WarriorVBox"]
+[node name="WarriorIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/WarriorCard/WarriorVBox" unique_id=1539060730]
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
 texture = ExtResource("2")
 stretch_mode = 5
 
-[node name="WarriorButton" type="Button" parent="VBoxContainer/CardsContainer/WarriorCard/WarriorVBox"]
+[node name="WarriorButton" type="Button" parent="VBoxContainer/CardsContainer/WarriorCard/WarriorVBox" unique_id=942902446]
+layout_mode = 2
 text = "Guerreiro"
 
-[node name="MageCard" type="PanelContainer" parent="VBoxContainer/CardsContainer"]
+[node name="MageCard" type="PanelContainer" parent="VBoxContainer/CardsContainer" unique_id=708394434]
+layout_mode = 2
 theme_type_variation = &"CardPanel"
 
-[node name="MageVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/MageCard"]
+[node name="MageVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/MageCard" unique_id=1297166055]
+layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="MageIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/MageCard/MageVBox"]
+[node name="MageIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/MageCard/MageVBox" unique_id=2108993033]
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
 texture = ExtResource("3")
 stretch_mode = 5
 
-[node name="MageButton" type="Button" parent="VBoxContainer/CardsContainer/MageCard/MageVBox"]
+[node name="MageButton" type="Button" parent="VBoxContainer/CardsContainer/MageCard/MageVBox" unique_id=2006626703]
+layout_mode = 2
 text = "Mago"
 
-[node name="ArcherCard" type="PanelContainer" parent="VBoxContainer/CardsContainer"]
+[node name="ArcherCard" type="PanelContainer" parent="VBoxContainer/CardsContainer" unique_id=1107935140]
+layout_mode = 2
 theme_type_variation = &"CardPanel"
 
-[node name="ArcherVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/ArcherCard"]
+[node name="ArcherVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/ArcherCard" unique_id=672587513]
+layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="ArcherIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/ArcherCard/ArcherVBox"]
+[node name="ArcherIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/ArcherCard/ArcherVBox" unique_id=28102778]
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
 texture = ExtResource("4")
 stretch_mode = 5
 
-[node name="ArcherButton" type="Button" parent="VBoxContainer/CardsContainer/ArcherCard/ArcherVBox"]
+[node name="ArcherButton" type="Button" parent="VBoxContainer/CardsContainer/ArcherCard/ArcherVBox" unique_id=1082233738]
+layout_mode = 2
 text = "Arqueiro"
 
-[node name="RogueCard" type="PanelContainer" parent="VBoxContainer/CardsContainer"]
+[node name="RogueCard" type="PanelContainer" parent="VBoxContainer/CardsContainer" unique_id=1154819253]
+layout_mode = 2
 theme_type_variation = &"CardPanel"
 
-[node name="RogueVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/RogueCard"]
+[node name="RogueVBox" type="VBoxContainer" parent="VBoxContainer/CardsContainer/RogueCard" unique_id=235776282]
+layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="RogueIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/RogueCard/RogueVBox"]
+[node name="RogueIcon" type="TextureRect" parent="VBoxContainer/CardsContainer/RogueCard/RogueVBox" unique_id=480992026]
 custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
 texture = ExtResource("7")
 stretch_mode = 5
 
-[node name="RogueButton" type="Button" parent="VBoxContainer/CardsContainer/RogueCard/RogueVBox"]
+[node name="RogueButton" type="Button" parent="VBoxContainer/CardsContainer/RogueCard/RogueVBox" unique_id=2122886789]
+layout_mode = 2
 text = "Ladino"
 
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer" unique_id=1124030841]
 custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.08, 0.04, 1)
-theme_override_font_sizes/font_outline_size = 2
+text = "Guerreiro: armadura pesada e espada em punho — resiste na linha de frente e aguenta qualquer combate corpo a corpo."
 horizontal_alignment = 1
 autowrap_mode = 2
-text = "Guerreiro: armadura pesada e espada em punho — resiste na linha de frente e aguenta qualquer combate corpo a corpo."
 
-[node name="ConfirmButton" type="Button" parent="VBoxContainer"]
+[node name="ConfirmButton" type="Button" parent="VBoxContainer" unique_id=892809613]
 custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
 text = "Confirmar e começar"
 
-[node name="BackButton" type="Button" parent="VBoxContainer"]
+[node name="BackButton" type="Button" parent="VBoxContainer" unique_id=993308199]
 custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
 text = "Voltar ao menu"
 
 [connection signal="pressed" from="VBoxContainer/CardsContainer/WarriorCard/WarriorVBox/WarriorButton" to="." method="_on_warrior_button_pressed"]

@@ -20,6 +20,7 @@ var is_invulnerable: bool = false
 
 
 func _ready() -> void:
+	add_to_group("player")
 	attack_shape.disabled = true
 	attack_timer.wait_time = attack_duration
 	attack_timer.one_shot = true

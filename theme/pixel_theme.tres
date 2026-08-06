@@ -85,11 +85,11 @@ border_color = Color(1, 0.769, 0.157, 1)
 anti_aliasing = false
 
 [resource]
-Button/colors/font_color = Color(1, 0.769, 0.157, 1)
+Button/colors/font_color = Color(0.9537517, 0.8433892, 0, 1)
 Button/colors/font_disabled_color = Color(0.4, 0.4, 0.4, 1)
 Button/colors/font_focus_color = Color(1, 0.918, 0.6, 1)
 Button/colors/font_hover_color = Color(1, 0.918, 0.6, 1)
-Button/colors/font_pressed_color = Color(0.169, 0.122, 0.055, 1)
+Button/colors/font_pressed_color = Color(0, 0.54918796, 0.9138069, 1)
 Button/font_sizes/font_size = 20
 Button/styles/disabled = SubResource("StyleBoxFlat_disabled")
 Button/styles/focus = SubResource("StyleBoxFlat_focus")
