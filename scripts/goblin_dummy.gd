@@ -18,6 +18,7 @@ var _label_base_y: float
 
 func _ready() -> void:
 	hp = max_hp
+	add_to_group("enemy")
 	hit_label.visible = false
 	_label_base_y = hit_label.position.y
 	respawn_timer.wait_time = respawn_time
@@ -25,12 +26,12 @@ func _ready() -> void:
 	respawn_timer.timeout.connect(_on_respawn)
 
 
-func take_hit() -> void:
+func take_hit(amount: int = 1) -> void:
 	if knocked_out:
 		return
-	hp -= 1
+	hp -= amount
 	_flash_red()
-	_show_hit_label()
+	_show_hit_label(amount)
 	if hp <= 0:
 		_knock_out()
 
@@ -42,8 +43,8 @@ func _flash_red() -> void:
 		sprite.modulate = Color(1, 1, 1)
 
 
-func _show_hit_label() -> void:
-	hit_label.text = "-1"
+func _show_hit_label(amount: int) -> void:
+	hit_label.text = "-%d" % amount
 	hit_label.position.y = _label_base_y
 	hit_label.modulate.a = 1.0
 	hit_label.visible = true

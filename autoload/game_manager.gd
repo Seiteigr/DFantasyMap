@@ -2,27 +2,27 @@ extends Node
 
 # Autoload (singleton) — acessível em qualquer script como "GameManager".
 # Guarda qual personagem foi escolhido na tela de seleção e centraliza
-# as trocas de cena do jogo.
+# as trocas de cena do jogo. HP/mana/atributos moraram pro PlayerStats,
+# itens e gold pro InventoryManager — aqui fica só navegação de cena.
 
-signal hearts_changed(current: int, max_hearts: int)
-
-enum CharacterClass { WARRIOR, MAGE, ARCHER, ROGUE }
-
-const MAX_HEARTS := 4
+# CLERIC reaproveita a cena/sprite que antes era rotulada "Mago" — a
+# animação "Heal" do pack sempre coube muito mais como clérigo do que como
+# mago de dano. Um Feiticeiro/Mago de verdade (elemental) é item futuro,
+# precisa de sprite novo que o pacote atual não tem.
+enum CharacterClass { WARRIOR, CLERIC, ARCHER, ROGUE }
 
 var selected_character: CharacterClass = CharacterClass.WARRIOR
-var hearts: int = MAX_HEARTS
 
 const CHARACTER_SCENES := {
 	CharacterClass.WARRIOR: "res://scenes/characters/Warrior.tscn",
-	CharacterClass.MAGE: "res://scenes/characters/Mage.tscn",
+	CharacterClass.CLERIC: "res://scenes/characters/Mage.tscn",
 	CharacterClass.ARCHER: "res://scenes/characters/Archer.tscn",
 	CharacterClass.ROGUE: "res://scenes/characters/Rogue.tscn",
 }
 
 const CHARACTER_NAMES := {
 	CharacterClass.WARRIOR: "Guerreiro",
-	CharacterClass.MAGE: "Mago",
+	CharacterClass.CLERIC: "Clérigo",
 	CharacterClass.ARCHER: "Arqueiro",
 	CharacterClass.ROGUE: "Ladino",
 }
@@ -45,19 +45,11 @@ func go_to_character_select() -> void:
 
 
 func start_game() -> void:
-	reset_hearts()
+	PlayerStats.reset_stats()
+	InventoryManager.reset()
+	SkillManager.reset()
 	get_tree().change_scene_to_file("res://scenes/levels/Level1.tscn")
 
 
-func reset_hearts() -> void:
-	hearts = MAX_HEARTS
-	hearts_changed.emit(hearts, MAX_HEARTS)
-
-
-func take_damage(amount: int = 1) -> void:
-	if hearts <= 0:
-		return
-	hearts = max(hearts - amount, 0)
-	hearts_changed.emit(hearts, MAX_HEARTS)
-	if hearts <= 0:
-		get_tree().change_scene_to_file("res://scenes/ui/GameOver.tscn")
+func game_over() -> void:
+	get_tree().change_scene_to_file("res://scenes/ui/GameOver.tscn")

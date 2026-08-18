@@ -6,8 +6,12 @@ extends Area2D
 @export var speed: float = 420.0
 @export var lifetime: float = 1.2
 @export var damage: int = 1
+# Flecha de skill (Tiro Perfurante): não some no primeiro acerto, atravessa
+# vários inimigos até o tempo de vida acabar.
+@export var piercing: bool = false
 
 var _direction: Vector2 = Vector2.RIGHT
+var _already_hit: Array[Node] = []
 
 @onready var lifetime_timer: Timer = $LifetimeTimer
 
@@ -31,6 +35,10 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.has_method("take_hit"):
-		area.take_hit()
+	if not area.has_method("take_hit") or _already_hit.has(area):
+		return
+	area.take_hit(damage)
+	if piercing:
+		_already_hit.append(area)
+	else:
 		queue_free()

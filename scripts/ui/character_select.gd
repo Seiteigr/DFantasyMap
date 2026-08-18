@@ -13,7 +13,7 @@ var _cards_by_class: Dictionary
 func _ready() -> void:
 	_cards_by_class = {
 		GameManager.CharacterClass.WARRIOR: warrior_card,
-		GameManager.CharacterClass.MAGE: mage_card,
+		GameManager.CharacterClass.CLERIC: mage_card,
 		GameManager.CharacterClass.ARCHER: archer_card,
 		GameManager.CharacterClass.ROGUE: rogue_card,
 	}
@@ -25,7 +25,7 @@ func _on_warrior_button_pressed() -> void:
 
 
 func _on_mage_button_pressed() -> void:
-	_select(GameManager.CharacterClass.MAGE)
+	_select(GameManager.CharacterClass.CLERIC)
 
 
 func _on_archer_button_pressed() -> void:
@@ -54,8 +54,8 @@ func _select(character_class: GameManager.CharacterClass) -> void:
 	match character_class:
 		GameManager.CharacterClass.WARRIOR:
 			description_label.text = "Guerreiro: armadura pesada e espada em punho — resiste na linha de frente e aguenta qualquer combate corpo a corpo."
-		GameManager.CharacterClass.MAGE:
-			description_label.text = "Mago: conjura magias à distância, atacando antes que o perigo consiga se aproximar."
+		GameManager.CharacterClass.CLERIC:
+			description_label.text = "Clérigo: cura, benções e magia de apoio — mantém o grupo de pé enquanto ataca de perto."
 		GameManager.CharacterClass.ARCHER:
 			description_label.text = "Arqueiro: mira infalível com o arco — golpeia de longe sem deixar o inimigo chegar perto."
 		GameManager.CharacterClass.ROGUE:

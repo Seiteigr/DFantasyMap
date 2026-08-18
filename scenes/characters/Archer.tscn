@@ -178,6 +178,7 @@ attack_animation = "attack"
 attack_duration = 0.4
 projectile_scene = ExtResource("5")
 projectile_delay = 0.15
+class_id = "archer"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -40)

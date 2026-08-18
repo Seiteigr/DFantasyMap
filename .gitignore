@@ -15,3 +15,13 @@ mono_crash.*.json
 # System / editor files
 .DS_Store
 Thumbs.db
+
+# Asset packs de terceiros com licença "não redistribuir" (Mystic Woods,
+# Sprout Lands UI Pack, Pixelwood Valley, Characters Animations Asset Pack).
+# Ficam só na máquina de quem desenvolve — ver README.md pra baixar de novo.
+assets_external/
+assets/village/
+
+# Godot MCP Pro é um plugin pago/proprietário (ferramenta de desenvolvimento,
+# não faz parte do jogo) — fora do repositório público por licença.
+addons/

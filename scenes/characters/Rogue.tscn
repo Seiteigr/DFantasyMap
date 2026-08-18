@@ -175,6 +175,7 @@ script = ExtResource("1")
 speed = 210.0
 attack_animation = "attack"
 attack_duration = 0.2
+class_id = "rogue"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.62, 0.5, 0.85, 1)

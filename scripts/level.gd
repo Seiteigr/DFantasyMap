@@ -7,6 +7,7 @@ extends Node2D
 
 const WorldBuilder := preload("res://scripts/world/world_builder.gd")
 const Minimap := preload("res://scripts/world/minimap.gd")
+const MerchantScene := preload("res://scenes/npc/Merchant.tscn")
 
 const FLAVOR_LATER_DELAY := 5.0
 
@@ -26,6 +27,7 @@ var _time_in_biome: float = 0.0
 func _ready() -> void:
 	_world = WorldBuilder.build(self, entities)
 	_spawn_player()
+	_spawn_merchant()
 	minimap.setup(_world["terrain"], _world["world_size"], _world["landmark_points"])
 	minimap.follow(_player)
 	_update_biome()
@@ -47,6 +49,14 @@ func _spawn_player() -> void:
 		camera.limit_right = int(_world["world_size"].x)
 		camera.limit_bottom = int(_world["world_size"].y)
 		camera.make_current()
+
+
+func _spawn_merchant() -> void:
+	# Fica pertinho do spawn, na Floresta — fácil de achar sem precisar
+	# explorar, e não atrapalha os inimigos que nascem mais longe.
+	var merchant: Area2D = MerchantScene.instantiate()
+	merchant.position = WorldBuilder.spawn_point() + Vector2(60, 20)
+	entities.add_child(merchant)
 
 
 func _process(delta: float) -> void:

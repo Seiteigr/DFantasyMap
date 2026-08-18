@@ -1,0 +1,109 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/status_window.gd" id="1"]
+[ext_resource type="Theme" path="res://theme/pixel_theme.tres" id="2"]
+
+[node name="StatusWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("2")
+script = ExtResource("1")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -150.0
+offset_right = 140.0
+offset_bottom = 150.0
+theme_type_variation = &"CardPanel"
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+theme_override_font_sizes/font_size = 22
+text = "Status"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Nível 1"
+
+[node name="XpLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "XP: 0 / 20"
+
+[node name="HpLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "HP: 30 / 30"
+
+[node name="ManaLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Mana: 18 / 18"
+
+[node name="PointsLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.851, 0.302, 1)
+text = "Pontos livres: 0"
+
+[node name="SkillPointsLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 1)
+text = "Pontos de skill: 0 (tecla L)"
+
+[node name="MagicRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="MagicLabel" type="Label" parent="Panel/VBox/MagicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Magia: 1"
+
+[node name="MagicButton" type="Button" parent="Panel/VBox/MagicRow"]
+layout_mode = 2
+text = "+"
+
+[node name="ColossoRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="ColossoLabel" type="Label" parent="Panel/VBox/ColossoRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Colosso: 1"
+
+[node name="ColossoButton" type="Button" parent="Panel/VBox/ColossoRow"]
+layout_mode = 2
+text = "+"
+
+[node name="DexRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="DexLabel" type="Label" parent="Panel/VBox/DexRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Destreza: 1"
+
+[node name="DexButton" type="Button" parent="Panel/VBox/DexRow"]
+layout_mode = 2
+text = "+"
+
+[node name="HintLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "Tecla K fecha esta janela"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Panel/VBox/MagicRow/MagicButton" to="." method="_on_magic_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/ColossoRow/ColossoButton" to="." method="_on_colosso_button_pressed"]
+[connection signal="pressed" from="Panel/VBox/DexRow/DexButton" to="." method="_on_dex_button_pressed"]

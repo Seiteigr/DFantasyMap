@@ -20,6 +20,7 @@ extends RefCounted
 
 const Terrain := preload("res://scripts/world/terrain.gd")
 const Landmarks := preload("res://scripts/world/landmarks.gd")
+const Villages := preload("res://scripts/world/villages.gd")
 
 const ISLAND_W := 1400.0
 const ISLAND_H := 1000.0
@@ -114,6 +115,7 @@ static func biomes() -> Array:
 			"details": {"flower": 22, "mushroom": 10, "twig": 8},
 			"enemies": {"goblin": 4, "orc": 2, "dragon_green": 1},
 			"dormant_enemies": [],
+			"difficulty": 1.0,
 		},
 		{
 			"id": "desert",
@@ -132,6 +134,7 @@ static func biomes() -> Array:
 			"details": {"bone": 10, "twig": 8, "pebble": 16},
 			"enemies": {"skeleton": 4, "orc": 2, "dragon_red": 1},
 			"dormant_enemies": ["skeleton"],
+			"difficulty": 1.4,
 		},
 		{
 			"id": "ruins",
@@ -149,6 +152,7 @@ static func biomes() -> Array:
 			"details": {"bone": 12, "pebble": 16, "moss": 10},
 			"enemies": {"skeleton": 5, "goblin": 3, "orc": 1},
 			"dormant_enemies": [],
+			"difficulty": 1.2,
 		},
 		{
 			"id": "cave",
@@ -166,6 +170,7 @@ static func biomes() -> Array:
 			"details": {"mushroom": 14, "pebble": 18, "crystal_shard": 10},
 			"enemies": {"dragon_red": 2, "dragon_green": 2, "skeleton": 4},
 			"dormant_enemies": ["dragon_red", "dragon_green"],
+			"difficulty": 1.7,
 		},
 	]
 
@@ -196,6 +201,12 @@ static func _landmark_point(quadrant: Rect2) -> Vector2:
 	return quadrant.position + Vector2(quadrant.size.x * 0.5, quadrant.size.y * 0.42)
 
 
+# Povoado de cada ilha: um pouco a sudoeste do marco, longe o bastante do
+# spawn/pontes pra não brigar com as outras estradas forçadas.
+static func _village_point(quadrant: Rect2) -> Vector2:
+	return _landmark_point(quadrant) + Vector2(-230.0, 90.0)
+
+
 # --- construção principal ----------------------------------------------------
 
 
@@ -223,6 +234,7 @@ static func build(world: Node2D, entities: Node2D) -> Dictionary:
 	_build_collision(world, terrain, bridge_list)
 
 	var landmark_points: Array = []
+	var village_points: Array = []
 	for biome_index in biome_list.size():
 		var biome: Dictionary = biome_list[biome_index]
 		var point: Vector2 = _landmark_point(biome["quadrant"])
@@ -231,8 +243,12 @@ static func build(world: Node2D, entities: Node2D) -> Dictionary:
 		landmark.position = point
 		entities.add_child(landmark)
 
+		var village_point: Vector2 = _village_point(biome["quadrant"])
+		village_points.append(village_point)
+		Villages.populate(entities, biome["id"], village_point, rng)
+
 	for biome_index in biome_list.size():
-		_populate(entities, biome_list[biome_index], terrain, landmark_points[biome_index], rng)
+		_populate(entities, biome_list[biome_index], terrain, landmark_points[biome_index], village_points[biome_index], rng)
 
 	_build_cave_darkness(world, terrain, biome_list)
 
@@ -265,6 +281,7 @@ static func _build_anchors(biome_list: Array, bridge_list: Array) -> Array:
 	for biome_index in biome_list.size():
 		var quadrant: Rect2 = biome_list[biome_index]["quadrant"]
 		anchors.append({"point": _landmark_point(quadrant), "radius": 130.0, "biome": biome_index})
+		anchors.append({"point": _village_point(quadrant), "radius": 140.0, "biome": biome_index})
 	anchors.append({"point": spawn_point(), "radius": 100.0, "biome": 0})
 
 	for bridge in bridge_list:
@@ -436,10 +453,11 @@ static func _build_collision(world: Node2D, terrain: Terrain, bridge_list: Array
 
 
 static func _populate(entities: Node2D, biome: Dictionary, terrain: Terrain,
-		landmark_point: Vector2, rng: RandomNumberGenerator) -> void:
+		landmark_point: Vector2, village_point: Vector2, rng: RandomNumberGenerator) -> void:
 	var quadrant: Rect2 = biome["quadrant"]
 	var taken := PackedVector3Array()
 	taken.append(Vector3(landmark_point.x, landmark_point.y, 150.0))
+	taken.append(Vector3(village_point.x, village_point.y, Villages.FOOTPRINT_RADIUS))
 
 	for prop_name in biome["props"]:
 		var def: Dictionary = PROP_DEFS[prop_name]
@@ -474,7 +492,7 @@ static func _populate(entities: Node2D, biome: Dictionary, terrain: Terrain,
 			if spot == Vector2.INF:
 				continue
 			taken.append(Vector3(spot.x, spot.y, ENEMY_RADIUS))
-			_add_enemy(entities, scene, spot, dormant)
+			_add_enemy(entities, scene, spot, dormant, float(biome.get("difficulty", 1.0)))
 
 
 # Espalha `count` itens em punhados (3 a 6 por grupo) em vez de distribuí-los
@@ -577,11 +595,13 @@ static func _add_prop(entities: Node2D, def: Dictionary, spot: Vector2, tint: Co
 	entities.add_child(prop)
 
 
-static func _add_enemy(entities: Node2D, scene: PackedScene, spot: Vector2, dormant: bool) -> void:
+static func _add_enemy(entities: Node2D, scene: PackedScene, spot: Vector2, dormant: bool, difficulty: float) -> void:
 	var enemy := scene.instantiate()
 	enemy.position = spot
 	if dormant and ("dormant" in enemy):
 		enemy.dormant = true
+	if "damage_multiplier" in enemy:
+		enemy.damage_multiplier = difficulty
 
 	var enabler := VisibleOnScreenEnabler2D.new()
 	enabler.rect = Rect2(-80, -110, 160, 150)

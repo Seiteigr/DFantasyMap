@@ -175,6 +175,7 @@ script = ExtResource("1")
 speed = 180.0
 attack_animation = "attack"
 attack_duration = 0.32
+class_id = "warrior"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -40)
