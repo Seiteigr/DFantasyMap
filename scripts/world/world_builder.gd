@@ -248,7 +248,8 @@ static func build(world: Node2D, entities: Node2D) -> Dictionary:
 		Villages.populate(entities, biome["id"], village_point, rng)
 
 	for biome_index in biome_list.size():
-		_populate(entities, biome_list[biome_index], terrain, landmark_points[biome_index], village_points[biome_index], rng)
+		_populate(entities, biome_list[biome_index], terrain, landmark_points[biome_index],
+			village_points[biome_index], anchors, biome_index, rng)
 
 	_build_cave_darkness(world, terrain, biome_list)
 
@@ -453,11 +454,19 @@ static func _build_collision(world: Node2D, terrain: Terrain, bridge_list: Array
 
 
 static func _populate(entities: Node2D, biome: Dictionary, terrain: Terrain,
-		landmark_point: Vector2, village_point: Vector2, rng: RandomNumberGenerator) -> void:
+		landmark_point: Vector2, village_point: Vector2, anchors: Array, biome_index: int,
+		rng: RandomNumberGenerator) -> void:
 	var quadrant: Rect2 = biome["quadrant"]
 	var taken := PackedVector3Array()
 	taken.append(Vector3(landmark_point.x, landmark_point.y, 150.0))
 	taken.append(Vector3(village_point.x, village_point.y, Villages.FOOTPRINT_RADIUS))
+
+	# Reserva a boca de cada ponte (e o spawn) livre de prop/detalhe/inimigo —
+	# sem isso, rocha/árvore podia nascer bem na entrada da passagem entre
+	# biomas e entupir o único caminho de terra que liga as ilhas.
+	for anchor in anchors:
+		if anchor["biome"] == biome_index:
+			taken.append(Vector3(anchor["point"].x, anchor["point"].y, anchor["radius"] + 40.0))
 
 	for prop_name in biome["props"]:
 		var def: Dictionary = PROP_DEFS[prop_name]
