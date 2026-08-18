@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Script" path="res://scripts/player_base.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/units/ninja/idle.png" id="2"]
@@ -156,7 +156,8 @@ attack_effect_scene = ExtResource("5")
 class_id = "rogue"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -37)
+position = Vector2(0, -66.60000000000001)
+scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_1")
 animation = &"idle"
 

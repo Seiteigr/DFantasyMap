@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3]
+[gd_scene load_steps=29 format=3]
 
 [ext_resource type="Script" path="res://scripts/player_base.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/units/ranger/idle.png" id="2"]
@@ -221,7 +221,8 @@ projectile_delay = 0.15
 class_id = "archer"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -37)
+position = Vector2(0, -66.60000000000001)
+scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_1")
 animation = &"idle"
 

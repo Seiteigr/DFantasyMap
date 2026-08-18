@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Script" path="res://scripts/player_base.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/units/high_wizard/idle.png" id="2"]
@@ -196,7 +196,8 @@ attack_effect_scene = ExtResource("5")
 class_id = "cleric"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -39)
+position = Vector2(0, -70.2)
+scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_1")
 animation = &"idle"
 
