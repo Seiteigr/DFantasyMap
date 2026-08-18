@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/patrol_enemy.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/units/enemies/skeleton.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/units/enemies/abysmal_knight.png" id="2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -14,7 +14,7 @@ line_length = 220.0
 line_horizontal = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -30)
+position = Vector2(0, -68)
 texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

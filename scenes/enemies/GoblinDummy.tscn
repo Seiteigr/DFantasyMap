@@ -1,11 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/goblin_dummy.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/units/warrior_black/goblin_idle.png" id="2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_frame0"]
-atlas = ExtResource("2")
-region = Rect2(0, 0, 192, 192)
+[ext_resource type="Texture2D" path="res://assets/units/enemies/zombie.png" id="2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
 radius = 26.0
@@ -16,8 +12,8 @@ max_hp = 3
 respawn_time = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -30)
-texture = SubResource("AtlasTexture_frame0")
+position = Vector2(0, -26)
+texture = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hurtbox")
