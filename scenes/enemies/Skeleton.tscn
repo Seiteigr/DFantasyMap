@@ -1,7 +1,67 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/patrol_enemy.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/units/enemies/abysmal_knight.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/units/enemies_anim/abysmal_knight/idle.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/units/enemies_anim/abysmal_knight/walk.png" id="3"]
+
+[sub_resource type="AtlasTexture" id="Atlas_idle0"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 162, 214)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle1"]
+atlas = ExtResource("2")
+region = Rect2(162, 0, 162, 214)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk0"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 162, 214)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk1"]
+atlas = ExtResource("3")
+region = Rect2(162, 0, 162, 214)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk2"]
+atlas = ExtResource("3")
+region = Rect2(324, 0, 162, 214)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk3"]
+atlas = ExtResource("3")
+region = Rect2(486, 0, 162, 214)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 16.0
@@ -14,9 +74,10 @@ speed = 50.0
 line_length = 220.0
 line_horizontal = false
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -68)
-texture = ExtResource("2")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -103)
+sprite_frames = SubResource("SpriteFrames_1")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1")

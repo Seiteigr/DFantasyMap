@@ -6,7 +6,7 @@ extends Area2D
 @export var max_hp: int = 4
 @export var respawn_time: float = 3.0
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var respawn_timer: Timer = $RespawnTimer
 @onready var hit_label: Label = $HitLabel
@@ -19,6 +19,7 @@ var _label_base_y: float
 func _ready() -> void:
 	hp = max_hp
 	add_to_group("enemy")
+	sprite.play("idle")
 	hit_label.visible = false
 	_label_base_y = hit_label.position.y
 	respawn_timer.wait_time = respawn_time

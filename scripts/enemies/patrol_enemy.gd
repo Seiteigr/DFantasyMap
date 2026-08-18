@@ -63,7 +63,7 @@ const DROP_TABLE := {
 
 const ItemDropScene := preload("res://scenes/items/ItemDrop.tscn")
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 var hp: int
@@ -87,6 +87,7 @@ func _ready() -> void:
 	add_to_group("enemy")
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	sprite.play("idle")
 	_reset_pattern_position()
 	_prev_position = position
 
@@ -134,6 +135,7 @@ func _physics_process(delta: float) -> void:
 	var move_delta: Vector2 = position - _prev_position
 	if absf(move_delta.x) > 0.05:
 		sprite.flip_h = move_delta.x < 0.0
+	_update_animation(move_delta.length() > 0.05)
 	_prev_position = position
 
 	# Enquanto o jogador continuar encostado, segue tomando dano — quem
@@ -142,6 +144,14 @@ func _physics_process(delta: float) -> void:
 	for body in _touching:
 		if is_instance_valid(body):
 			body.take_damage(effective_damage)
+
+
+# Troca idle/walk conforme o inimigo está de fato andando — cobre patrulha,
+# perseguição e até a leve oscilação do padrão LINE perto das pontas.
+func _update_animation(moving: bool) -> void:
+	var anim := "walk" if moving else "idle"
+	if sprite.animation != anim:
+		sprite.play(anim)
 
 
 # Distância até o grupo "player" pra decidir se começa a perseguir — só
@@ -247,6 +257,7 @@ func _respawn() -> void:
 	_reset_pattern_position()
 	_prev_position = position
 	sprite.modulate = Color(1, 1, 1, 1)
+	sprite.play("idle")
 	visible = true
 	collision_shape.set_deferred("disabled", false)
 	process_mode = Node.PROCESS_MODE_INHERIT

@@ -1,7 +1,115 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/patrol_enemy.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/units/enemies/orc_warrior.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/units/enemies_anim/orc_warrior/idle.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/units/enemies_anim/orc_warrior/walk.png" id="3"]
+
+[sub_resource type="AtlasTexture" id="Atlas_idle0"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle1"]
+atlas = ExtResource("2")
+region = Rect2(73, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle2"]
+atlas = ExtResource("2")
+region = Rect2(146, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle3"]
+atlas = ExtResource("2")
+region = Rect2(219, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle4"]
+atlas = ExtResource("2")
+region = Rect2(292, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_idle5"]
+atlas = ExtResource("2")
+region = Rect2(365, 0, 73, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk0"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 87, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk1"]
+atlas = ExtResource("3")
+region = Rect2(87, 0, 87, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk2"]
+atlas = ExtResource("3")
+region = Rect2(174, 0, 87, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk3"]
+atlas = ExtResource("3")
+region = Rect2(261, 0, 87, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk4"]
+atlas = ExtResource("3")
+region = Rect2(348, 0, 87, 106)
+
+[sub_resource type="AtlasTexture" id="Atlas_walk5"]
+atlas = ExtResource("3")
+region = Rect2(435, 0, 87, 106)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle3")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle4")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_idle5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk0")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk3")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk4")
+},
+{
+"duration": 1.0,
+"texture": SubResource("Atlas_walk5")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 24.0
@@ -13,9 +121,10 @@ pattern = 1
 speed = 45.0
 square_size = 220.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -33)
-texture = ExtResource("2")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -49)
+sprite_frames = SubResource("SpriteFrames_1")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1")
