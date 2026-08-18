@@ -153,6 +153,7 @@ speed = 210.0
 attack_animation = "attack"
 attack_duration = 0.2
 attack_effect_scene = ExtResource("5")
+class_id = "rogue"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -37)

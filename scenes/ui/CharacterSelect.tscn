@@ -82,7 +82,7 @@ stretch_mode = 5
 
 [node name="MageButton" type="Button" parent="VBoxContainer/CardsContainer/MageCard/MageVBox" unique_id=2006626703]
 layout_mode = 2
-text = "Mago"
+text = "Clérigo"
 
 [node name="ArcherCard" type="PanelContainer" parent="VBoxContainer/CardsContainer" unique_id=1107935140]
 layout_mode = 2
