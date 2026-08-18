@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/effects/attack_effect.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/effects/ice_star.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="Atlas_0"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 64, 66)
+
+[sub_resource type="AtlasTexture" id="Atlas_1"]
+atlas = ExtResource("2")
+region = Rect2(64, 0, 64, 66)
+
+[sub_resource type="AtlasTexture" id="Atlas_2"]
+atlas = ExtResource("2")
+region = Rect2(128, 0, 64, 66)
+
+[sub_resource type="AtlasTexture" id="Atlas_3"]
+atlas = ExtResource("2")
+region = Rect2(192, 0, 64, 66)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_3")
+}],
+"loop": false,
+"name": &"play",
+"speed": 14.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="Material_1"]
+blend_mode = 1
+
+[node name="MageEffect" type="AnimatedSprite2D"]
+material = SubResource("Material_1")
+script = ExtResource("1")
+sprite_frames = SubResource("SpriteFrames_1")
+animation = &"play"

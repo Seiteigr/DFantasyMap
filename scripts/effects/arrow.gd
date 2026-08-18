@@ -6,6 +6,7 @@ extends Area2D
 @export var speed: float = 420.0
 @export var lifetime: float = 1.2
 @export var damage: int = 1
+@export var impact_effect_scene: PackedScene
 
 var _direction: Vector2 = Vector2.RIGHT
 
@@ -33,4 +34,8 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_hit"):
 		area.take_hit()
+		if impact_effect_scene:
+			var effect: Node2D = impact_effect_scene.instantiate()
+			get_parent().add_child(effect)
+			effect.global_position = global_position
 		queue_free()

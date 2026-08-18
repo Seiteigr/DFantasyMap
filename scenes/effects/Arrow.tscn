@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" path="res://scripts/effects/arrow.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/props/arrow.png" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/effects/ArrowImpact.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(26, 8)
 
 [node name="Arrow" type="Area2D"]
 script = ExtResource("1")
+impact_effect_scene = ExtResource("3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2")

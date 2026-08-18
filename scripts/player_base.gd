@@ -9,6 +9,8 @@ extends CharacterBody2D
 @export var invulnerable_time: float = 1.0
 @export var projectile_scene: PackedScene
 @export var projectile_delay: float = 0.15
+@export var attack_effect_scene: PackedScene
+@export var attack_effect_offset: float = 26.0
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
@@ -68,10 +70,23 @@ func _start_attack() -> void:
 	is_attacking = true
 	sprite.play(attack_animation)
 	attack_timer.start()
+	if attack_effect_scene:
+		_spawn_attack_effect()
 	if projectile_scene:
 		_fire_projectile()
 	else:
 		attack_shape.disabled = false
+
+
+# Golpe/magia "de perto": o efeito nasce um pouco à frente do personagem,
+# no lado pra onde ele está virado. Arqueiro não usa isso — o efeito dele
+# fica no impacto da flecha (ver arrow.gd), não na hora do disparo.
+func _spawn_attack_effect() -> void:
+	var effect: AnimatedSprite2D = attack_effect_scene.instantiate()
+	get_parent().add_child(effect)
+	var dir := Vector2.LEFT if sprite.flip_h else Vector2.RIGHT
+	effect.global_position = global_position + dir * attack_effect_offset + Vector2(0, -40)
+	effect.flip_h = sprite.flip_h
 
 
 func _fire_projectile() -> void:
