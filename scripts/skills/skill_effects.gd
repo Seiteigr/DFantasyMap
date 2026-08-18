@@ -17,6 +17,21 @@ const BASE_ATTACK_DAMAGE := 1
 const BASE_MELEE_RANGE := 50.0
 const DASH_HIT_RADIUS := 32.0
 
+# VFX genéricos por "sabor" de efeito — não é um por skill, é um por tipo de
+# handler, senão viraria uma tabela gigante pra manter. Explosão pra golpes
+# de área, raio pra procs/dashes rápidos, estrela de gelo pra buffs/auras
+# (glow neutro o bastante pra servir de "efeito de status" em qualquer uma).
+const BurstEffect := preload("res://scenes/effects/WarriorEffect.tscn")
+const ProcEffect := preload("res://scenes/effects/RogueEffect.tscn")
+const AuraEffect := preload("res://scenes/effects/MageEffect.tscn")
+
+
+static func _spawn_vfx(scene: PackedScene, parent: Node, pos: Vector2, flip_h: bool = false) -> void:
+	var effect: AnimatedSprite2D = scene.instantiate()
+	parent.add_child(effect)
+	effect.global_position = pos
+	effect.flip_h = flip_h
+
 
 static func apply(player: CharacterBody2D, skill: Dictionary) -> void:
 	match skill.get("effect", ""):
@@ -55,8 +70,10 @@ static func trigger_proc(player: CharacterBody2D, proc_skill: Dictionary, hit_en
 			var angle: float = proc_skill.get("proc_angle_deg", 100.0)
 			for enemy in _enemies_in_cone(player, radius, angle):
 				enemy.take_hit(dmg)
+				_spawn_vfx(ProcEffect, player.get_parent(), enemy.global_position, player.get_facing_dir().x < 0.0)
 		"poison":
 			if hit_enemy and hit_enemy.has_method("apply_poison"):
+				_spawn_vfx(AuraEffect, player.get_parent(), hit_enemy.global_position)
 				hit_enemy.apply_poison(
 					int(proc_skill.get("poison_damage", 2)),
 					float(proc_skill.get("poison_tick", 1.0)),
@@ -74,6 +91,8 @@ static func _melee_burst(player: CharacterBody2D, skill: Dictionary) -> void:
 	var radius := BASE_MELEE_RANGE * float(skill.get("range_mult", 1.0))
 	var angle: float = skill.get("angle_deg", 140.0)
 	var dmg := _damage(float(skill.get("damage_mult", 1.0)))
+	var flip: bool = player.get_facing_dir().x < 0.0
+	_spawn_vfx(BurstEffect, player.get_parent(), player.global_position + player.get_facing_dir() * radius * 0.6 + Vector2(0, -40), flip)
 	for enemy in _enemies_in_cone(player, radius, angle):
 		enemy.take_hit(dmg)
 
@@ -111,6 +130,7 @@ static func _on_hit_proc(player: CharacterBody2D, skill: Dictionary) -> void:
 
 
 static func _buff(player: CharacterBody2D, skill: Dictionary) -> void:
+	_spawn_vfx(AuraEffect, player.get_parent(), player.global_position + Vector2(0, -40))
 	PlayerStats.apply_buff(
 		float(skill.get("duration", 0.0)),
 		float(skill.get("speed_mult", 1.0)),
@@ -130,6 +150,7 @@ static func _dash_attack(player: CharacterBody2D, skill: Dictionary) -> void:
 	var start: Vector2 = player.global_position
 	var end: Vector2 = start + player.get_facing_dir() * distance
 	player.global_position = end
+	_spawn_vfx(BurstEffect, player.get_parent(), end + Vector2(0, -40), player.get_facing_dir().x < 0.0)
 	for enemy in player.get_tree().get_nodes_in_group("enemy"):
 		if not is_instance_valid(enemy) or not enemy.has_method("take_hit"):
 			continue
@@ -142,6 +163,7 @@ static func _dash_speed(player: CharacterBody2D, skill: Dictionary) -> void:
 	var dir: Vector2 = player.get_facing_dir()
 	if skill.get("backward", false):
 		dir = -dir
+	_spawn_vfx(ProcEffect, player.get_parent(), player.global_position + Vector2(0, -40), dir.x < 0.0)
 	player.global_position += dir * distance
 	PlayerStats.apply_buff(float(skill.get("boost_duration", 2.0)), float(skill.get("speed_boost_mult", 1.5)))
 
@@ -153,6 +175,7 @@ static func _point_segment_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
 
 
 static func _evasion(player: CharacterBody2D, skill: Dictionary) -> void:
+	_spawn_vfx(AuraEffect, player.get_parent(), player.global_position + Vector2(0, -40))
 	player.is_invulnerable = true
 	await player.get_tree().create_timer(float(skill.get("duration", 1.2))).timeout
 	if is_instance_valid(player):
@@ -172,6 +195,7 @@ static func _pulse_aoe(player: CharacterBody2D, skill: Dictionary) -> void:
 		await player.get_tree().create_timer(tick).timeout
 		if not is_instance_valid(player):
 			return
+		_spawn_vfx(AuraEffect, player.get_parent(), player.global_position + Vector2(0, -40))
 		for enemy in player.get_tree().get_nodes_in_group("enemy"):
 			if is_instance_valid(enemy) and enemy.has_method("take_hit"):
 				if enemy.global_position.distance_to(player.global_position) <= radius:
@@ -201,6 +225,7 @@ static func _ground_aoe_zone(player: CharacterBody2D, skill: Dictionary) -> void
 		await player.get_tree().create_timer(tick).timeout
 		if not is_instance_valid(zone):
 			return
+		_spawn_vfx(BurstEffect, player.get_parent(), center)
 		for enemy in player.get_tree().get_nodes_in_group("enemy"):
 			if is_instance_valid(enemy) and enemy.has_method("take_hit"):
 				if enemy.global_position.distance_to(center) <= radius:
